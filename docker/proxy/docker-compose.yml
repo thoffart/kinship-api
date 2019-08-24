@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  traefik:
+    image: traefik
+    command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
+    restart: always
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+      - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

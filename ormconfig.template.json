@@ -1,0 +1,25 @@
+{
+  "type": "postgres",
+  "host": "${DB_HOST}",
+  "port": "${DB_PORT}",
+  "username": "${DB_USERNAME}",
+  "password": "${DB_PASSWORD}",
+  "database": "${DB_DATABASE}",
+  "entities": [
+    "src/**/*.entity.ts",
+    "dist/src/**/*.entity.js"
+  ],
+  "migrations": [
+    "migration/*{.ts,.js}"
+  ],
+  "cli": {
+    "migrationsDir": "migration"
+  },
+  "synchronize": false,
+  "logging": [
+    "error",
+    "warn",
+    "log"
+  ],
+  "logger": "file"
+}

@@ -1,0 +1,102 @@
+version: '3.7'
+
+networks:
+  backend:
+    driver: "bridge"
+  
+volumes:
+  postgres:
+    driver: "local"
+
+services:
+
+### Proxy Container ############################
+
+  traefik:
+    image: traefik
+    command:  >
+      --web --docker
+      --docker.domain=docker.localhost
+      --logLevel=DEBUG 
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - backend
+
+### PostgreSQL PostGis Container ############################
+  postgres:
+    build: ./docker/postgres
+    volumes:
+      - ${DATA_SAVE_PATH}/postgres:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    networks:
+      - backend
+
+### nodejs Container #######################################
+  nodejs:
+    build: 
+      context: ./docker/nodejs
+      args:
+        - ENVIRONMENT=${ENVIRONMENT}
+    depends_on:
+      - postgres
+    ports:
+      - "9229:9229"
+    volumes:
+      - ./:/var/www
+    networks:
+      - backend
+
+### pgAdmin Container #######################################
+  pgadmin:
+    build: ./docker/pgadmin
+    ports:
+      - "5050:5050"
+    depends_on:
+      - postgres
+    volumes:
+      - ${DATA_SAVE_PATH}/pgadmin:/var/lib/pgadmin
+    networks:
+      - backend
+
+### Redis ################################################
+  redis:
+    build: ./docker/redis
+    volumes:
+      - ${DATA_SAVE_PATH}/redis:/data
+    networks:
+      - backend
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ${APPLICATION}:/var/www:cached
+      - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+      - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+      - ${NGINX_SSL_PATH}:/etc/nginx/ssl
+      - ${APP_WEB_PATH}:/var/www/.front-end:cached
+    depends_on:
+      - nodejs
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+      - NODE_CONTAINER_NAME=${NODE_CONTAINER_NAME}
+    #é a única forma de passar variáveis de ambiente para a conf do nginx, lembre-se de escapar com $$ as variáveis
+    command: /bin/bash -c "envsubst '$$SERVER_NAME $$NODE_CONTAINER_NAME' < /etc/nginx/sites-available/.default.conf.template > /etc/nginx/sites-available/default.conf && exec nginx"
+    networks:
+      - backend
+    # keys usadas pelo proxy do traefik pra pode descobrir o endereço da aplicação
+    labels:
+      - traefik.enable=true
+      - traefik.backend=${COMPOSE_PROJECT_NAME}_nginx
+      - traefik.frontend.rule=Host:${SERVER_NAME}
+      - traefik.docker.network=backend
