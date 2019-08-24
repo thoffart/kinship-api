@@ -1,0 +1,44 @@
+version: '3.7'
+### Compose para AWS #######################################
+
+services:
+
+### nodejs Container #######################################
+  nodejs:
+    build: 
+      context: ./docker/nodejs
+      args:
+        - ENVIRONMENT=${ENVIRONMENT}
+    volumes:
+      - ./:/var/www
+
+### Nginx Server Container ##################################
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ${APPLICATION}:/var/www:cached
+      - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+      - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+      - ${NGINX_SSL_PATH}:/etc/nginx/ssl
+      - ${APP_WEB_PATH}:/var/www/.front-end:cached
+    depends_on:
+      - nodejs
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+      - NODE_CONTAINER_NAME=${NODE_CONTAINER_NAME}
+    #é a única forma de passar variáveis de ambiente para a conf do nginx, lembre-se de escapar com $$ as variáveis
+    command: /bin/bash -c "envsubst '$$SERVER_NAME $$NODE_CONTAINER_NAME' < /etc/nginx/sites-available/.default.conf.template > /etc/nginx/sites-available/default.conf && exec nginx"
+    restart: always
+    ports: 
+      - 80:80
+      - 443:443
+
+### Redis ################################################
+  redis:
+    build: ./docker/redis
+    volumes:
+      - ${DATA_SAVE_PATH}/redis:/data
+    networks:
+      - backend
