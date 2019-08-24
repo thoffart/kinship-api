@@ -1,0 +1,66 @@
+scalar DateTime
+
+type Usuario {
+  id: Int
+  nome: String
+  email: String
+  password: String
+  foto_perfil: String
+  data_nascimento: DateTime
+}
+
+type Response {
+  code: Int
+  message: String
+}
+
+type PaginateUsuario {
+  page_total: Int
+  total: Int
+  list: [Usuario]
+}
+
+type ResponseUsuarios {
+  code: Int
+  message: String
+  data: PaginateUsuario
+}
+
+type ResponseToken {
+  token: String
+  expiresIn: String
+  show_permission_page: Boolean
+  usuario: Usuario
+}
+
+type Query {
+  me: Usuario
+}
+
+type Mutation {
+  register(registerInput: RegisterInput): Usuario
+  updateUsuario(updateUsuarioInput: UpdateUsuarioInput): Response
+  deleteUsuario(id: Int!): Response
+  loginFacebook(loginFacebookInput: LoginFacebookInput): ResponseToken
+}
+
+input RegisterInput {
+  nome: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUsuarioInput {
+  nome: String
+  email: String
+  password: String
+  data_nascimento: String
+}
+
+input LoginFacebookInput {
+  id_facebook: String!
+  id_device: String
+  nome: String
+  email: String
+  foto_perfil: String
+}
