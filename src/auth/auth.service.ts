@@ -37,10 +37,6 @@ export class AuthService {
     return { expiresIn, token };
   }
 
-  public async isValidPassword(usuario: Usuario, password: string): Promise<boolean> {
-    return await bcrypt.compare(password, usuario.password);
-  }
-
   async validateUser(token: string, operationName: string) {
     if (this._whitelist.some(item => item === operationName)) {
       return true;

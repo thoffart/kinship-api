@@ -4,9 +4,14 @@ type Usuario {
   id: Int
   nome: String
   email: String
-  password: String
   foto_perfil: String
+  genero: String
   data_nascimento: DateTime
+}
+
+type UsuarioLikes {
+  name: String
+  id: String
 }
 
 type Response {
@@ -29,7 +34,7 @@ type ResponseUsuarios {
 type ResponseToken {
   token: String
   expiresIn: String
-  show_permission_page: Boolean
+  show_introduction_page: Boolean
   usuario: Usuario
 }
 
@@ -38,16 +43,9 @@ type Query {
 }
 
 type Mutation {
-  register(registerInput: RegisterInput): Usuario
   updateUsuario(updateUsuarioInput: UpdateUsuarioInput): Response
   deleteUsuario(id: Int!): Response
   loginFacebook(loginFacebookInput: LoginFacebookInput): ResponseToken
-}
-
-input RegisterInput {
-  nome: String!
-  email: String!
-  password: String!
 }
 
 input UpdateUsuarioInput {
@@ -57,10 +55,13 @@ input UpdateUsuarioInput {
   data_nascimento: String
 }
 
+
+
 input LoginFacebookInput {
   id_facebook: String!
-  id_device: String
   nome: String
   email: String
   foto_perfil: String
+  genero: String
+  data_nascimento: String
 }
