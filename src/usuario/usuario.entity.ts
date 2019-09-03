@@ -4,19 +4,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
-  BeforeInsert,
-  Index,
 } from 'typeorm';
 import moment from 'moment';
-import bcrypt from 'bcrypt';
 
 export enum ModoPerfil {
-  Desativado = 'Desativado',
+  Publico = 'Publico',
   Privado = 'Privado',
-  Interativo = 'Interativo'
 }
 
 @Entity('usuarios')
@@ -35,26 +28,6 @@ export class Usuario {
   @Column({
     nullable: true
   })
-  password: string;
-
-  @BeforeInsert()
-  async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-
-  @Column({
-    default: 1000
-  })
-  raio: number;
-
-  @Column({
-    nullable: true
-  })
-  id_device: string;
-
-  @Column({
-    nullable: true
-  })
   foto_perfil: string;
 
   @Column({
@@ -68,10 +41,24 @@ export class Usuario {
   data_nascimento: Date;
 
   @Column({
+    nullable: true
+  })
+  genero: string;
+
+
+  @Column({
     unique: true,
     nullable: true
   })
   id_facebook: string;
+
+  @Column({
+    type: 'enum',
+    enum: ModoPerfil,
+    nullable: true,
+    default: ModoPerfil.Privado
+  })
+  modo_perfil: string;
   
   @CreateDateColumn({
     transformer: {

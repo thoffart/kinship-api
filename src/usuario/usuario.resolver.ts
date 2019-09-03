@@ -2,10 +2,8 @@ import { Usuario } from 'src/usuario/usuario.entity';
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UsuarioService } from './usuario.service';
 import {
-  UsuarioInput,
   LoginFacebookInput,
 } from './usuario.interface';
-import { Inject } from '@nestjs/common';
 
 @Resolver('Usuario')
 export class UsuarioResolver {
@@ -19,12 +17,7 @@ export class UsuarioResolver {
   }
 
   @Mutation()
-  async register(@Args('registerInput') registerInput: UsuarioInput) {
-    return await this.usuarioService.create(registerInput);
-  }
-
-  @Mutation()
-  async updateUsuario(@Args('updateUsuarioInput') updateUsuarioInput: UsuarioInput) {
+  async updateUsuario(@Args('updateUsuarioInput') updateUsuarioInput: LoginFacebookInput) {
     await this.usuarioService.update(updateUsuarioInput);
     return { code: 200, message: 'Usuário atualizado com sucesso' };
   }
@@ -39,7 +32,5 @@ export class UsuarioResolver {
   async loginFacebook(@Args('loginFacebookInput') loginFacebookInput: LoginFacebookInput) {
     return await this.usuarioService.loginFacebook(loginFacebookInput);
   }
-
-
 
 }
