@@ -37,7 +37,6 @@ export class UsuarioService {
   }
 
   async loginFacebook(loginFacebookInput: LoginFacebookInput) {
-    console.log(loginFacebookInput.foto_perfil);
     const show_introduction_page = await this.registerFacebookLogin(loginFacebookInput);
     const usuario = await this.usuarioRepository.findOne({
       email: loginFacebookInput.email,
