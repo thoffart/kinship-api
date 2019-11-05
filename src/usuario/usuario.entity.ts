@@ -1,11 +1,14 @@
+import { Posts } from './../posts/posts.entity';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import moment from 'moment';
+
 
 export enum ModoPerfil {
   Publico = 'Publico',
@@ -59,6 +62,9 @@ export class Usuario {
     default: ModoPerfil.Privado
   })
   modo_perfil: string;
+
+  @OneToMany(type => Posts, post => post.usuario)
+  postsOwner: Posts[];
   
   @CreateDateColumn({
     transformer: {

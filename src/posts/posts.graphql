@@ -1,0 +1,45 @@
+scalar DateTime
+
+type Post { 
+  id: Int
+  texto: String
+  usuario: Usuario  
+}
+
+type PaginatePost {
+  page_total: Int
+  total: Int
+  list: [Post]
+}
+
+type ResponsePosts {
+  code: Int
+  message: String
+  data: PaginatePost
+}
+
+type ResponsePost {
+  code: Int
+  message: String
+  data: Post
+}
+
+input CreatePostInput {
+  texto: String
+}
+
+input UpdatePostInput {
+  id: Int
+  texto: String
+}
+
+type Query {
+  getPost(id: Int!): ResponsePost
+  getAllPosts(limit: Int, offset: Int): ResponsePosts
+}
+
+type Mutation {
+  createPost(createPostInput: CreatePostInput): ResponsePost
+  updatePost(updatePostInput: UpdatePostInput): Response
+  deletePost(id: Int!): Response
+}
