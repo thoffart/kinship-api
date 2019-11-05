@@ -15,7 +15,7 @@
   "cli": {
     "migrationsDir": "migration"
   },
-  "synchronize": false,
+  "synchronize": true,
   "logging": [
     "error",
     "warn",

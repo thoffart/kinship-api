@@ -9,6 +9,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { UsuarioModule } from './usuario/usuario.module';
 import { SessionManagerModule } from './../src/common/session/session-manager.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   controllers: [AppController],
@@ -29,6 +30,7 @@ import { SessionManagerModule } from './../src/common/session/session-manager.mo
       installSubscriptionHandlers: true,
     }),
     UsuarioModule,
+    PostsModule,
     SessionManagerModule,
   ],
   providers: [
