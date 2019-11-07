@@ -11,6 +11,7 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { SessionManagerModule } from './../src/common/session/session-manager.module';
 import { PostsModule } from './posts/posts.module';
 import { LikeModule } from './like/like.module';
+import { ComentarioModule } from './comentario/comentario.module';
 
 @Module({
   controllers: [AppController],
@@ -33,6 +34,7 @@ import { LikeModule } from './like/like.module';
     UsuarioModule,
     PostsModule,
     LikeModule,
+    ComentarioModule,
     SessionManagerModule,
   ],
   providers: [

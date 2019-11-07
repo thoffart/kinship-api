@@ -11,6 +11,8 @@ import { CreatePostInput, UpdatePostInput } from './posts.interface';
 export class PostsService {
   private _relations: string[] = [
     'usuario',
+    'likes',
+    'comentarios'
   ];
 
   constructor(

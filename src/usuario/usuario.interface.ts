@@ -1,5 +1,9 @@
 interface Likes {
-  name: string,
+  id: string,
+}
+
+interface Comentarios {
+  texto: string,
   id: string,
 }
 
@@ -11,6 +15,7 @@ export interface LoginFacebookInput {
   foto_perfil: string;
   genero: string,
   likes: Likes[],
+  comentarios: Comentarios[],
   data_nascimento: string,
 }
 

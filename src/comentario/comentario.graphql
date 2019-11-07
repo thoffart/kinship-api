@@ -1,0 +1,22 @@
+scalar DateTime
+
+type Comentarios {
+  usuario: Usuario
+  posts: Post
+  created_at: DateTime
+}
+
+type ResponseComentarios {
+  code: Int
+  message: String
+  data: [Comentarios]
+}
+
+type Query {
+  getPostComentarios(id_post: Int!): ResponseComentarios
+}
+
+type Mutation {
+  createComentarioPost(id_post: Int!, texto: String): Response
+  deleteComentarioPost(id_comentario: Int!, id_usuario: Int!): Response
+}
