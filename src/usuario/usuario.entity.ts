@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import moment from 'moment';
 import { Like } from 'src/like/like.entity';
+import { Comentario } from 'src/comentario/comentario.entity';
 
 
 export enum ModoPerfil {
@@ -69,6 +70,9 @@ export class Usuario {
 
   @OneToMany(type => Like, like => like.usuario)
   likes: Like[];
+
+  @OneToMany(type => Comentario, comentario => comentario.usuario)
+  comentario: Comentario[];
   
   @CreateDateColumn({
     transformer: {

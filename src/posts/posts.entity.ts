@@ -11,6 +11,7 @@ import {
 import moment from 'moment';
 import { Usuario } from 'src/usuario/usuario.entity';
 import { Like } from 'src/like/like.entity';
+import { Comentario } from 'src/comentario/comentario.entity';
 
 @Entity('posts')
 export class Posts {
@@ -29,6 +30,9 @@ export class Posts {
 
   @OneToMany(type => Like, like => like.post)
   likes: Like[];
+
+  @OneToMany(type => Comentario, comentario => comentario.post)
+  comentarios: Comentario[];
   
   @CreateDateColumn({
     transformer: {
