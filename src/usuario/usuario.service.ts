@@ -20,7 +20,7 @@ export class UsuarioService {
       .getOne();
   }
 
-  async update(updateUsuarioInput: LoginFacebookInput): Promise<void> {
+  async update(updateUsuarioInput: any): Promise<void> {
     const usuario = await this.authService.getAuthUser();
     if (updateUsuarioInput.email && updateUsuarioInput.email !== usuario.email) {
       if (await this.usuarioRepository.findOne({ where: { email: updateUsuarioInput.email } })) {
