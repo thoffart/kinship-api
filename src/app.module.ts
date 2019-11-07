@@ -10,6 +10,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { UsuarioModule } from './usuario/usuario.module';
 import { SessionManagerModule } from './../src/common/session/session-manager.module';
 import { PostsModule } from './posts/posts.module';
+import { LikeModule } from './like/like.module';
 
 @Module({
   controllers: [AppController],
@@ -31,6 +32,7 @@ import { PostsModule } from './posts/posts.module';
     }),
     UsuarioModule,
     PostsModule,
+    LikeModule,
     SessionManagerModule,
   ],
   providers: [

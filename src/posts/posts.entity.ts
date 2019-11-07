@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import moment from 'moment';
 import { Usuario } from 'src/usuario/usuario.entity';
+import { Like } from 'src/like/like.entity';
 
 @Entity('posts')
 export class Posts {
@@ -24,6 +26,9 @@ export class Posts {
   })
   @JoinColumn({ name: 'id_usuario' })
   usuario: Usuario;
+
+  @OneToMany(type => Like, like => like.post)
+  likes: Like[];
   
   @CreateDateColumn({
     transformer: {
