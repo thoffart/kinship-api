@@ -1,0 +1,22 @@
+scalar DateTime
+
+type Like {
+  usuario: Usuario
+  posts: Post
+  created_at: DateTime
+}
+
+type ResponseCountLikes {
+  code: Int
+  message: String
+  data: Int
+}
+
+type Query {
+  getCountPostLikes(id_post: Int!): ResponseCountLikes  
+}
+
+type Mutation {
+  likePost(id_post: Int!): Response
+  dislikePost(id_post: Int!): Response
+}
