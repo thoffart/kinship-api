@@ -1,9 +1,11 @@
 scalar DateTime
 
+
 type Post { 
   id: Int
   texto: String
-  usuario: Usuario  
+  usuario: Usuario
+  likes: [Like]
 }
 
 type PaginatePost {
