@@ -1,7 +1,7 @@
 scalar DateTime
 
 type Like {
-  usuario: Usuario
+  id_usuario: Int
   posts: Post
   created_at: DateTime
 }
