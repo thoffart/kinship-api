@@ -1,0 +1,27 @@
+scalar DateTime
+
+type Chat {
+  id: Int
+  id_post: Int
+  usuario_criador: Usuario
+  usuario_receptor: Usuario
+}
+
+type Response {
+  code: Int
+  message: String
+}
+
+type ResponseChat {
+  code: Int
+  message: String
+  data: [Chat]
+}
+
+type Query {
+  getChats(id_criador: Int): ResponseChat
+}
+
+type Mutation {
+  createChat(id_post: Int, id_criador: Int, id_receptor: Int): Response
+}

@@ -1,9 +1,9 @@
+import { MensagemModule } from './mensagem/mensagem.module';
 import { DateScalar } from './common/scalar/date-scalar';
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
-import { MailerModule, HandlebarsAdapter } from '@nest-modules/mailer';
 import { AppController } from './app.controller';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
@@ -12,6 +12,8 @@ import { SessionManagerModule } from './../src/common/session/session-manager.mo
 import { PostsModule } from './posts/posts.module';
 import { LikeModule } from './like/like.module';
 import { ComentarioModule } from './comentario/comentario.module';
+import { ChatModule } from './chat/chat.module';
+import { PubSub } from 'graphql-subscriptions';
 
 @Module({
   controllers: [AppController],
@@ -35,10 +37,13 @@ import { ComentarioModule } from './comentario/comentario.module';
     PostsModule,
     LikeModule,
     ComentarioModule,
+    ChatModule,
+    MensagemModule,
     SessionManagerModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: PubSub, useValue: new PubSub },
     AuthService,
     DateScalar,
   ]
