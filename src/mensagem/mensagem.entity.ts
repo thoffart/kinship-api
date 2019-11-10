@@ -1,42 +1,41 @@
+import { Posts } from './../posts/posts.entity';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 import moment from 'moment';
-import { Usuario } from 'src/usuario/usuario.entity';
 import { Like } from 'src/like/like.entity';
 import { Comentario } from 'src/comentario/comentario.entity';
 import { Chat } from 'src/chat/chat.entity';
+import { Usuario } from 'src/usuario/usuario.entity';
 
-@Entity('posts')
-export class Posts {
+@Entity('mensagens')
+export class Mensagem {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   texto: string;
 
-  @ManyToOne(type => Usuario, usuario => usuario.postsOwner, {
+  @ManyToOne(type => Usuario, usuario => usuario.mensagens, {
     onDelete: 'CASCADE',
     nullable: false,
   })
   @JoinColumn({ name: 'id_usuario' })
   usuario: Usuario;
 
-  @OneToMany(type => Like, like => like.post)
-  likes: Like[];
-
-  @OneToMany(type => Comentario, comentario => comentario.post)
-  comentarios: Comentario[];
-
-  @OneToMany(type => Chat, chat => chat.post)
-  chat: Chat[];
+  @ManyToOne(type => Chat, chat => chat.mensagens, {
+    onDelete: 'CASCADE',
+    nullable: true
+  })
+  @JoinColumn({ name: 'id_chat' })
+  chat: Chat;
   
   @CreateDateColumn({
     transformer: {

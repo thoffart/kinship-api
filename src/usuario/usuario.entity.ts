@@ -10,6 +10,8 @@ import {
 import moment from 'moment';
 import { Like } from 'src/like/like.entity';
 import { Comentario } from 'src/comentario/comentario.entity';
+import { Chat } from 'src/chat/chat.entity';
+import { Mensagem } from 'src/mensagem/mensagem.entity';
 
 
 export enum ModoPerfil {
@@ -73,7 +75,16 @@ export class Usuario {
 
   @OneToMany(type => Comentario, comentario => comentario.usuario)
   comentario: Comentario[];
-  
+
+  @OneToMany(type => Chat, chat => chat.criador)
+  chatCriador: Chat[];
+
+  @OneToMany(type => Chat, chat => chat.receptor)
+  chatReceptor: Chat[];
+
+  @OneToMany(type => Mensagem, mensagem => mensagem.usuario)
+  mensagens: Mensagem[];
+
   @CreateDateColumn({
     transformer: {
       from: (date: Date) => {

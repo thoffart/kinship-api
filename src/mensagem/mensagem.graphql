@@ -1,0 +1,40 @@
+scalar DateTime
+
+type Mensagem {
+  id: Int
+  usuario: Usuario
+  texto: String
+  chat: Chat
+  created_at: DateTime
+}
+
+type ResponseMensagem {
+  code: Int
+  message: String
+  data: Mensagem
+}
+
+type ResponseMensagens {
+  code: Int
+  message: String
+  data: PaginateMensagem
+}
+
+type PaginateMensagem {
+  page_total: Int
+  total: Int
+  list: [Mensagem]
+}
+
+type Query {
+  getChat(id_chat: Int!): ResponseMensagens
+  getMoreChat(id_chat: Int!, offset: Int): ResponseMensagens
+}
+
+type Mutation {
+  createMensagem(id_chat: Int, texto: String): ResponseMensagem  
+}
+
+type Subscription {
+  receiveMensagem(id_chat: Int!): Mensagem
+}
