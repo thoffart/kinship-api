@@ -2,7 +2,9 @@ scalar DateTime
 
 type Comentarios {
   usuario: Usuario
+  id: Int
   posts: Post
+  texto: String
   created_at: DateTime
 }
 

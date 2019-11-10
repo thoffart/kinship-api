@@ -13,7 +13,7 @@ export class ComentarioService {
   ) { }
 
   async getPostComentarios(id_post: number): Promise<any> {
-    return await this.comentarioRepository.find({ where: { id_post } });
+    return await this.comentarioRepository.find({ where: { id_post }, relations: ['usuario'] });
   }
 
   async createComentarioPost(id_post: number, texto: string): Promise<void> {

@@ -6,6 +6,7 @@ type Post {
   texto: String
   usuario: Usuario
   likes: [Like]
+  comentarios: [Comentarios]
 }
 
 type PaginatePost {

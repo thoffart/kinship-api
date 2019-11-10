@@ -1,15 +1,18 @@
 import moment from 'moment';
-import { Entity, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, PrimaryColumn, Column } from 'typeorm';
+import { Entity, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, PrimaryColumn, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Usuario } from '../usuario/usuario.entity';
 import { Posts } from 'src/posts/posts.entity';
 
 @Entity('comentarios')
 export class Comentario {
-  @PrimaryColumn()
-  id_usuario: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @PrimaryColumn()
+  @Column()
   id_post: number;
+
+  @Column()
+  id_usuario: number;
 
   @Column()
   texto: string;
