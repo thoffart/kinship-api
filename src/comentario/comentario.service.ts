@@ -12,6 +12,11 @@ export class ComentarioService {
     @Inject(AuthService) private readonly authService: AuthService,
   ) { }
 
+  async getCountPostComentarios(id_post: number): Promise<Number> {
+    return await this.comentarioRepository.count({ where: { id_post } });
+  }
+
+
   async getPostComentarios(id_post: number): Promise<any> {
     return await this.comentarioRepository.find({ where: { id_post } });
   }

@@ -2,9 +2,18 @@ scalar DateTime
 
 type Comentarios {
   usuario: Usuario
-  posts: Post
+  post: Post
   created_at: DateTime
+  texto: String
 }
+
+
+type ResponseCountComentarios {
+  code: Int
+  message: String
+  data: Int
+}
+
 
 type ResponseComentarios {
   code: Int
@@ -14,6 +23,7 @@ type ResponseComentarios {
 
 type Query {
   getPostComentarios(id_post: Int!): ResponseComentarios
+  getCountPostComentarios(id_post: Int!): ResponseCountComentarios
 }
 
 type Mutation {

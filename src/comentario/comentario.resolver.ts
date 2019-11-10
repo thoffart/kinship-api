@@ -10,6 +10,12 @@ export class ComentarioResolver {
   ) { }
 
   @Query()
+  async getCountPostComentarios(@Args('id_post') id_post: number): Promise<Response> {
+    const data = await this.comentarioService.getCountPostComentarios(id_post);
+    return { code: 200, data };
+  }
+
+  @Query()
   async getPostComentarios(@Args('id_post') id_post: number): Promise<Response> {
     const data = await this.comentarioService.getPostComentarios(id_post);
     return { code: 200, data };
