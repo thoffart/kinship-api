@@ -24,6 +24,13 @@ export class ChatService {
     return list;
   }
 
+  async getUniqueChat(id_post, id_criador, id_receptor): Promise<any> {
+    const chat = await this.chatRepository.find({
+      where: {id_post, id_criador, id_receptor}
+    });
+    return chat.length && chat[0];
+  }
+
   async create(id_post: number, id_usuario_criador: number, id_usuario_receptor: number): Promise<any> {
     const chat = await this.chatRepository.save(this.chatRepository.create({ id_post, id_usuario_criador, id_usuario_receptor }));
     return await this.get(chat.id);
