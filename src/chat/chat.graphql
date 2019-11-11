@@ -10,6 +10,7 @@ type Chat {
 type Response {
   code: Int
   message: String
+  chat: Chat
 }
 
 type ResponseChat {
@@ -20,6 +21,7 @@ type ResponseChat {
 
 type Query {
   getChats(id_criador: Int): ResponseChat
+  getUniqueChat(id_post: Int, id_criador: Int, id_receptor: Int): Response
 }
 
 type Mutation {
