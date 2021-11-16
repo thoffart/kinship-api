@@ -37,7 +37,7 @@
     "@sindresorhus/slugify": "^0.9.1",
     "@types/nodemailer-mailgun-transport": "^1.4.0",
     "apollo-server-express": "^2.4.8",
-    "aws-sdk": "^2.501.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^3.0.3",
     "dotenv": "^8.0.0",
     "easyimage": "^3.1.1",
